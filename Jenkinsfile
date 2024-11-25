@@ -1,20 +1,38 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven3' // Le nom de l'installation Maven configurée dans "Global Tool Configuration"
+    }
     stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/ton-repo.git' // Remplace par l'URL de ton dépôt
+            }
+        }
         stage('Build') {
             steps {
-                echo 'Building...'
+                bat 'mvn clean install' // Commande pour Windows
+                // Si tu es sur Linux ou MacOS, remplace par :
+                // sh 'mvn clean install'
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
+                bat 'mvn test' // Pour Windows
             }
         }
-        stage('Deploy') {
+        stage('Package') {
             steps {
-                echo 'Deploying...'
+                bat 'mvn package' // Génération de l'artefact (ex. JAR ou WAR)
             }
+        }
+    }
+    post {
+        success {
+            echo 'Build réussi !'
+        }
+        failure {
+            echo 'Le build a échoué.'
         }
     }
 }
