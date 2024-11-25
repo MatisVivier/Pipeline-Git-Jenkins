@@ -7,7 +7,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Récupération du code depuis le dépôt Git"
-                git branch: 'main', url: 'https://github.com/ton-depot/ton-projet.git'
+                git branch: 'main', url: 'https://github.com/MatisVivier/Pipeline-Git-Jenkins'
             }
         }
         stage('Build') {
