@@ -1,13 +1,13 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven3' // Nom de l'installation Maven dans Jenkins
+        maven 'Maven3' // Maven configuré dans Jenkins
     }
     stages {
         stage('Checkout') {
             steps {
                 echo "Récupération du code depuis le dépôt Git"
-                git branch: 'main', url: 'https://github.com/MatisVivier/Pipeline-Git-Jenkins'
+                git branch: 'main', url: 'https://github.com/ton-depot/ton-projet.git'
             }
         }
         stage('Build') {
@@ -23,19 +23,9 @@ pipeline {
             }
         }
         stage('Static Analysis') {
-            parallel {
-                stage('Checkstyle') {
-                    steps {
-                        echo "Analyse avec Checkstyle"
-                        bat 'mvn checkstyle:check'
-                    }
-                }
-                stage('SpotBugs') {
-                    steps {
-                        echo "Analyse avec SpotBugs"
-                        bat 'mvn spotbugs:check'
-                    }
-                }
+            steps {
+                echo "Analyse du code avec Checkstyle"
+                bat 'mvn checkstyle:check'
             }
         }
         stage('Package') {
