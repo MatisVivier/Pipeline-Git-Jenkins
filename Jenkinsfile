@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/ton-repo.git' // Remplace par l'URL de ton dépôt
+                git 'https://github.com/MatisVivier/Pipeline-Git-Jenkins.git' // Remplace par l'URL de ton dépôt
             }
         }
         stage('Build') {
