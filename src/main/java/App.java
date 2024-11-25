@@ -1,27 +1,21 @@
 package com.example;
 
+import java.util.List; // Import non utilisé
+
 public class App {
-
-    private String appName;
-
-    // Constructeur
-    public App(String appName) {
-        this.appName = appName;
-    }
-
-    // Méthode pour obtenir le nom de l'application
-    public String getAppName() {
-        return appName;
-    }
-
-    // Méthode pour calculer le carré d'un nombre
-    public int square(int number) {
-        return number * number;
-    }
-
     public static void main(String[] args) {
-        App app = new App("TestApp");
-        System.out.println("Bienvenue dans " + app.getAppName());
-        System.out.println("Le carré de 5 est : " + app.square(5));
+        // Ligne très longue qui dépasse les 120 caractères, ce qui est une violation de la règle de longueur de ligne définie dans checkstyle.xml
+        System.out.println("Ceci est une ligne de texte extrêmement longue qui dépasse largement la limite de 120 caractères définie dans les règles Checkstyle.");
+
+    int x= 42; // Mauvaise indentation : cette ligne devrait être correctement alignée avec les autres dans le bloc.
+        
+        // Import inutile et code mal structuré
+        String unusedVariable = "Non utilisé";
+
+        System.out.println("Fichier Java qui viole plusieurs règles Checkstyle.");
+        // Indentation incorrecte
+    if (x > 0) {
+    System.out.println("x est positif."); // Manque d'indentation appropriée pour le contenu du bloc.
     }
+  }
 }
