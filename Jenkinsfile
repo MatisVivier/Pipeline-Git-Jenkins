@@ -4,14 +4,14 @@ pipeline {
         maven 'Maven3' // Le nom configuré dans Global Tool Configuration
     }
     environment {
-        PROJECT_NAME = 'MonProjet' // Nom du projet
-        DEPLOY_DIR = 'deploy' // Répertoire de déploiement simulé
+        PROJECT_NAME = 'PIPELINE-GIT-JENKINS' // Nom du projet
+        DEPLOY_DIR = 'PIPELINE-GIT-JENKINS' // Répertoire de déploiement simulé
     }
     stages {
         stage('Checkout') {
             steps {
                 echo "Récupération du code depuis le dépôt Git"
-                git branch: 'main', url: 'https://github.com/mon-compte/mon-projet.git'
+                git branch: 'main', url: 'https://github.com/MatisVivier/Pipeline-Git-Jenkins'
             }
         }
         stage('Build') {
