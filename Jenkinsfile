@@ -1,11 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven3' // Le nom configuré dans Global Tool Configuration
-    }
-    environment {
-        PROJECT_NAME = 'PIPELINE-GIT-JENKINS' // Nom du projet
-        DEPLOY_DIR = 'PIPELINE-GIT-JENKINS' // Répertoire de déploiement simulé
+        maven 'Maven3' // Maven configuré dans Global Tool Configuration
     }
     stages {
         stage('Checkout') {
@@ -16,8 +12,8 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo "Compilation du projet avec Maven"
-                bat 'mvn clean install' // Remplace par `sh` si tu es sur Linux/MacOS
+                echo "Compilation avec Maven"
+                bat 'mvn clean install' // Utilise 'sh' sur Linux/MacOS
             }
         }
         stage('Test') {
@@ -28,25 +24,8 @@ pipeline {
         }
         stage('Package') {
             steps {
-                echo "Génération du package (JAR ou WAR)"
+                echo "Création de l'artefact"
                 bat 'mvn package'
-            }
-        }
-        stage('Static Analysis') {
-            steps {
-                echo "Analyse de la qualité du code avec SonarQube"
-                bat 'mvn sonar:sonar -Dsonar.projectKey=${PROJECT_NAME}'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo "Déploiement simulé"
-                script {
-                    def artifactPath = findFiles(glob: '**/target/*.jar')[0].path
-                    echo "Artefact trouvé : ${artifactPath}"
-                    echo "Copie de l'artefact vers le répertoire de déploiement (${DEPLOY_DIR})"
-                    bat "mkdir ${DEPLOY_DIR} & copy ${artifactPath} ${DEPLOY_DIR}"
-                }
             }
         }
     }
@@ -55,11 +34,11 @@ pipeline {
             echo "Pipeline exécuté avec succès !"
         }
         failure {
-            echo "Le pipeline a échoué. Vérifiez les logs pour plus d'informations."
+            echo "Échec du pipeline. Vérifiez les logs Jenkins."
         }
         always {
-            echo "Pipeline terminé. Nettoyage des fichiers temporaires."
-            cleanWs() // Supprime les fichiers temporaires du workspace
+            echo "Nettoyage du workspace"
+            cleanWs()
         }
     }
 }
