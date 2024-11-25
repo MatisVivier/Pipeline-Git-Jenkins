@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven3' // Maven configuré dans Global Tool Configuration
+        maven 'Maven3' // Nom de l'installation Maven dans Jenkins
     }
     stages {
         stage('Checkout') {
@@ -13,13 +13,29 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Compilation avec Maven"
-                bat 'mvn clean install' // Utilise 'sh' sur Linux/MacOS
+                bat 'mvn clean install'
             }
         }
         stage('Test') {
             steps {
                 echo "Exécution des tests unitaires"
                 bat 'mvn test'
+            }
+        }
+        stage('Static Analysis') {
+            parallel {
+                stage('Checkstyle') {
+                    steps {
+                        echo "Analyse avec Checkstyle"
+                        bat 'mvn checkstyle:check'
+                    }
+                }
+                stage('SpotBugs') {
+                    steps {
+                        echo "Analyse avec SpotBugs"
+                        bat 'mvn spotbugs:check'
+                    }
+                }
             }
         }
         stage('Package') {
