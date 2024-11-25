@@ -4,9 +4,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AppTest {
+
     @Test
-    void testAddition() {
-        App app = new App();
-        assertEquals(5, app.addition(2, 3), "L'addition de 2 et 3 doit être égale à 5");
+    void testSquare() {
+        App app = new App("TestApp");
+        assertEquals(25, app.square(5), "Le carré de 5 doit être égal à 25");
+    }
+
+    @Test
+    void testAppName() {
+        App app = new App("TestApp");
+        assertEquals("TestApp", app.getAppName(), "Le nom de l'application doit être 'TestApp'");
     }
 }
