@@ -1,19 +1,21 @@
 package com.example;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AppTest {
+public class AppTest {
 
     @Test
-    void testSquare() {
-        App app = new App("TestApp");
-        assertEquals(25, app.square(5), "Le carré de 5 doit être égal à 25");
+    public void testSquare() {
+        App app = new App(); // Utilise le constructeur sans paramètre
+        int result = app.square(5);
+        assertEquals(25, result, "Le carré de 5 devrait être 25");
     }
 
     @Test
-    void testAppName() {
+    public void testGetAppName() {
         App app = new App("TestApp");
-        assertEquals("TestApp", app.getAppName(), "Le nom de l'application doit être 'TestApp'");
+        assertEquals("TestApp", app.getAppName(), "Le nom de l'application devrait être 'TestApp'");
     }
 }
