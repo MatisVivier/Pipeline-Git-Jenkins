@@ -13,7 +13,7 @@ public class App {
         this.appName = appName;
     }
 
-    // Méthode pour retourner le nom de l'applicffation
+    // Méthode pour retourner le nom de l'applicfation
     public String getAppName() {
         return appName;
     }
@@ -26,6 +26,7 @@ public class App {
     public static void main(String[] args) {
         App app = new App("MyApp");
         System.out.println("Nom de l'application : " + app.getAppName());
-        System.out.println("Carré de 4 : " + app.square(4));
+        System.out.println("Bravo l'équipe ");
+        System.out.println("Carré de 4 : "+ app.square(4));
     }
 }
