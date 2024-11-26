@@ -1,6 +1,7 @@
 pipeline {
     agent any
     tools {
+        git 'git'
         maven 'Maven3' // Maven configuré dans Jenkins
     }
     environment {
