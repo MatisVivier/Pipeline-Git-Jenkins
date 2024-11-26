@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven3' // Maven configuré dans Jenkins
+        maven 'Maven3' // Maven configuré dans Jenkifns
     }
     environment {
         BRANCH_NAME = 'dev' // Remplacer par le nom de ta branche de développement
