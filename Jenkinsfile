@@ -7,13 +7,12 @@ pipeline {
     environment {
         BRANCH_NAME = 'dev' // Remplacer par le nom de ta branche de développement
         MAIN_BRANCH = 'main' // Remplacer par la branche principale
-        GIT_PATH = 'C:\\Program Files\\Git\\bin\\git.exe' // Chemin absolu vers Git
     }
     stages {
         stage('Checkout') {
             steps {
                 echo "Récupération du code depuis la branche ${BRANCH_NAME}"
-                bat "${GIT_PATH} clone --branch ${BRANCH_NAME} https://github.com/MatisVivier/Pipeline-Git-Jenkins.git"
+                bat "git clone --branch ${BRANCH_NAME} https://github.com/MatisVivier/Pipeline-Git-Jenkins.git"
             }
         }
         stage('Build') {
@@ -52,12 +51,12 @@ pipeline {
 
                         // Configuration de Git avec le chemin absolu
                         bat """
-                            \"${GIT_PATH}\" config user.name "Jenkins"
-                            \"${GIT_PATH}\" config user.email "jenkins@example.com"
-                            \"${GIT_PATH}\" fetch origin
-                            \"${GIT_PATH}\" checkout ${MAIN_BRANCH}
-                            \"${GIT_PATH}\" merge ${BRANCH_NAME} --no-ff -m "Merge branch ${BRANCH_NAME} into ${MAIN_BRANCH}"
-                            \"${GIT_PATH}\" push origin ${MAIN_BRANCH}
+                            git config user.name "Jenkins"
+                            git config user.email "jenkins@example.com"
+                            gitfetch origin
+                            git checkout ${MAIN_BRANCH}
+                            git merge ${BRANCH_NAME} --no-ff -m "Merge branch ${BRANCH_NAME} into ${MAIN_BRANCH}"
+                            git push origin ${MAIN_BRANCH}
                         """
                     } else {
                         echo "Pipeline échouée, pas de merge vers main."
