@@ -5,6 +5,7 @@ pipeline {
     }
     environment {
         BRANCH_NAME = 'dev' // Remplacer par le nom de ta branche de développement
+        MAIN_BRANCH = 'main' // Remplacer par la branche principale
     }
     stages {
         stage('Checkout') {
@@ -37,24 +38,26 @@ pipeline {
                 bat 'mvn package'
             }
         }
-        stage('Push to Main') {
+        stage('Merge and Push to Main') {
             when {
-                branch 'feature/xyz'  // Cette étape se déclenche uniquement sur la branche dev
+                branch 'dev'  // Cette étape se déclenche uniquement sur la branche dev
             }
             steps {
                 script {
-                    // Si la pipeline passe avec succès, push vers main
                     if (currentBuild.result == 'SUCCESS') {
-                        echo "Pipeline réussie, pushing vers main..."
+                        echo "Pipeline réussie, merging vers main..."
+                        
+                        // Configuration de Git
                         sh '''
                             git config user.name "Jenkins"
                             git config user.email "jenkins@example.com"
-                            git checkout main
-                            git merge feature/xyz --no-ff -m "Merging changes from feature/xyz"
-                            git push origin main
+                            git fetch origin
+                            git checkout ${MAIN_BRANCH}
+                            git merge ${BRANCH_NAME} --no-ff -m "Merge branch ${BRANCH_NAME} into ${MAIN_BRANCH}"
+                            git push origin ${MAIN_BRANCH}
                         '''
                     } else {
-                        echo "Pipeline échouée, pas de push vers main."
+                        echo "Pipeline échouée, pas de merge vers main."
                     }
                 }
             }
