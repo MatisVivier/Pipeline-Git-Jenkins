@@ -7,7 +7,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Récupération du code depuis le dépôt Git"
-                git branch: 'main', url: 'https://github.com/MatisVivier/Pipeline-Git-Jenkins'
+                git branch: 'main', url: 'git@github.com:MatisVivier/Pipeline-Git-Jenkins.git'
             }
         }
         stage('Build') {
@@ -34,21 +34,30 @@ pipeline {
                 bat 'mvn package'
             }
         }
+        stage('Push Changes') {
+            steps {
+                script {
+                    // Utiliser ssh-agent pour gérer la clé SSH
+                    sshagent(['git-ssh-key']) {
+                        echo "Pousser les changements vers Git"
+                        bat '''
+                            git config user.name "MatisVivier"
+                            git config user.email "matisvivier2004@gmail.com"
+                            git add .
+                            git diff-index --quiet HEAD || git commit -m "Build successful - Changes pushed by Jenkins"
+                            git push origin main
+                        '''
+                    }
+                }
+            }
+        }
     }
     post {
         success {
             echo "Pipeline exécuté avec succès !"
-            echo "Poussée des changements vers le dépôt Git"
-            bat '''
-                git config user.name "Jenkins"
-                git config user.email "jenkins@example.com"
-                git add .
-                git commit -m "Build successful - Changes pushed by Jenkins"
-                git push origin main
-            '''
         }
         failure {
-            echo "Échec du pipeline. Aucune poussée n'a été effectuée."
+            echo "Échec du pipeline. Vérifiez les logs Jenkins."
         }
         always {
             echo "Nettoyage du workspace"
