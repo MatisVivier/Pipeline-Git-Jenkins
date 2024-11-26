@@ -47,11 +47,11 @@ pipeline {
                     // Vérifie si la build est réussie
                     if (currentBuild.currentResult == 'SUCCESS') {
                         echo "Pipeline réussie, merging vers main..."
-
+                        
                         // Configuration de Git
                         sh '''
-                            git config user.name "Jenkins"
-                            git config user.email "jenkins@example.com"
+                            git config user.name "MatisVivier"
+                            git config user.email "matisvivier2004@gmail.com"
                             git fetch origin
                             git checkout ${MAIN_BRANCH}
                             git merge ${BRANCH_NAME} --no-ff -m "Merge branch ${BRANCH_NAME} into ${MAIN_BRANCH}"
