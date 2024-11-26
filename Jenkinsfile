@@ -27,8 +27,7 @@ pipeline {
                 }
                 failure {
                     echo "Les tests ont échoué. Le pipeline ne poussera pas les changements."
-                    currentBuild.result = 'FAILURE'
-                    error('Tests échoués')
+                    error('Tests échoués')  // Arrêter le pipeline en cas d'échec des tests
                 }
             }
         }
@@ -43,8 +42,7 @@ pipeline {
                 }
                 failure {
                     echo "Des violations de code ont été détectées. Corrigez les erreurs avant de pousser."
-                    currentBuild.result = 'FAILURE'
-                    error('Violations détectées')
+                    error('Violations détectées')  // Arrêter le pipeline en cas de violation de code
                 }
             }
         }
