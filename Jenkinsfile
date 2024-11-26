@@ -62,7 +62,7 @@ pipeline {
                             "C:\\Program Files\\Git\\bin\\git.exe" fetch origin
                             "C:\\Program Files\\Git\\bin\\git.exe" checkout ${MAIN_BRANCH}
                             "C:\\Program Files\\Git\\bin\\git.exe" merge ${BRANCH_NAME} --no-ff -m "Merge branch ${BRANCH_NAME} into ${MAIN_BRANCH}"
-                            "C:\\Program Files\\Git\\bin\\git.exe" push https://<USERNAME>:<PAT>@github.com/MatisVivier/Pipeline-Git-Jenkins.git ${MAIN_BRANCH}
+                            "C:\\Program Files\\Git\\bin\\git.exe" push https://MatisVivier:<PAT>@github.com/MatisVivier/Pipeline-Git-Jenkins.git ${MAIN_BRANCH}
                         """
                     } else {
                         echo "Pipeline échouée, pas de merge vers main."
