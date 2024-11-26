@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven3' // Maven configuré dsdans Jenkins
+        maven 'Maven3' // Maven configuré dans Jenkins
     }
     environment {
         BRANCH_NAME = 'Dev'
@@ -46,13 +46,13 @@ pipeline {
                     "C:\\Program Files\\Git\\bin\\git.exe" config user.email "matisvivier2004@gmail.com"
                     "C:\\Program Files\\Git\\bin\\git.exe" add .
                     "C:\\Program Files\\Git\\bin\\git.exe" commit -m "Mise à jour sur ${BRANCH_NAME}"
-                    "C:\\Program Files\\Git\\bin\\git.exe" push https://MatisVivier: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@github.com/MatisVivier/Pipeline-Git-Jenkins.git ${BRANCH_NAME}
+                    "C:\\Program Files\\Git\\bin\\git.exe" push https://MatisVivier:${GITHUB_TOKEN}@github.com/MatisVivier/Pipeline-Git-Jenkins.git ${BRANCH_NAME}
                 """
             }
         }
         stage('Merge and Push to Main') {
             when {
-                branch 'dev'  // Cette étape se déclenche uniquement sur la branche dev f
+                branch 'Dev'  // Cette étape se déclenche uniquement sur la branche Dev
             }
             steps {
                 script {
@@ -62,7 +62,7 @@ pipeline {
                             "C:\\Program Files\\Git\\bin\\git.exe" fetch origin
                             "C:\\Program Files\\Git\\bin\\git.exe" checkout ${MAIN_BRANCH}
                             "C:\\Program Files\\Git\\bin\\git.exe" merge ${BRANCH_NAME} --no-ff -m "Merge branch ${BRANCH_NAME} into ${MAIN_BRANCH}"
-                            "C:\\Program Files\\Git\\bin\\git.exe" push https://MatisVivier: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@github.com/MatisVivier/Pipeline-Git-Jenkins.git ${MAIN_BRANCH}
+                            "C:\\Program Files\\Git\\bin\\git.exe" push https://MatisVivier:${GITHUB_TOKEN}@github.com/MatisVivier/Pipeline-Git-Jenkins.git ${MAIN_BRANCH}
                         """
                     } else {
                         echo "Pipeline échouée, pas de merge vers main."
