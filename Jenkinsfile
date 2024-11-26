@@ -1,7 +1,6 @@
 pipeline {
     agent any
     tools {
-        git 'git' // Git configuré dans Jenkins
         maven 'Maven3' // Maven configuré dans Jenkins
     }
     environment {
