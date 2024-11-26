@@ -44,9 +44,10 @@ pipeline {
             }
             steps {
                 script {
-                    if (currentBuild.result == 'SUCCESS') {
+                    // Vérifie si la build est réussie
+                    if (currentBuild.currentResult == 'SUCCESS') {
                         echo "Pipeline réussie, merging vers main..."
-                        
+
                         // Configuration de Git
                         sh '''
                             git config user.name "Jenkins"
