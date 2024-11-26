@@ -39,7 +39,7 @@ pipeline {
         }
         stage('Push to Main') {
             when {
-                branch 'feature/xyz'  // Cette étape se déclenche uniquement sur la branche feature/xyz
+                branch 'dev'  // Cette étape se déclenche uniquement sur la branche feature/xyz
             }
             steps {
                 script {
@@ -50,7 +50,7 @@ pipeline {
                             git config user.name "Jenkins"
                             git config user.email "jenkins@example.com"
                             git checkout main
-                            git merge feature/xyz --no-ff -m "Merging changes from feature/xyz"
+                            git merge feature/xyz --no-ff -m "Merging changes from dev"
                             git push origin main
                         '''
                     } else {
