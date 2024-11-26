@@ -25,37 +25,13 @@ pipeline {
         stage('Static Analysis') {
             steps {
                 echo "Analyse du code avec Checkstyle"
-                script {
-                    try {
-                        bat 'mvn checkstyle:check'
-                    } catch (Exception e) {
-                        currentBuild.result = 'FAILURE'
-                        throw e  // Propager l'exception pour échouer la pipeline
-                    }
-                }
+                bat 'mvn checkstyle:check'
             }
         }
         stage('Package') {
             steps {
                 echo "Création de l'artefact"
                 bat 'mvn package'
-            }
-        }
-        stage('Push') {
-            when {
-                expression { return currentBuild.result == null || currentBuild.result == 'SUCCESS' }
-            }
-            steps {
-                echo "Pushing changes to Git"
-                script {
-                    bat '''
-                    git config user.name "Jenkins"
-                    git config user.email "jenkins@example.com"
-                    git add .
-                    git commit -m "Build successful - Changes pushed by Jenkins"
-                    git push origin main
-                    '''
-                }
             }
         }
     }
