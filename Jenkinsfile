@@ -21,28 +21,17 @@ pipeline {
                 echo "Exécution des tests unitaires"
                 bat 'mvn test'
             }
-            post {
-                success {
-                    echo "Les tests ont réussi !"
-                }
-                failure {
-                    echo "Les tests ont échoué. Le pipeline ne poussera pas les changements."
-                    error('Tests échoués')  // Arrêter le pipeline en cas d'échec des tests
-                }
-            }
         }
         stage('Static Analysis') {
             steps {
                 echo "Analyse du code avec Checkstyle"
-                bat 'mvn checkstyle:check'
-            }
-            post {
-                success {
-                    echo "Aucune violation de code détectée."
-                }
-                failure {
-                    echo "Des violations de code ont été détectées. Corrigez les erreurs avant de pousser."
-                    error('Violations détectées')  // Arrêter le pipeline en cas de violation de code
+                script {
+                    try {
+                        bat 'mvn checkstyle:check'
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        throw e  // Propager l'exception pour échouer la pipeline
+                    }
                 }
             }
         }
@@ -50,6 +39,23 @@ pipeline {
             steps {
                 echo "Création de l'artefact"
                 bat 'mvn package'
+            }
+        }
+        stage('Push') {
+            when {
+                expression { return currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+            }
+            steps {
+                echo "Pushing changes to Git"
+                script {
+                    bat '''
+                    git config user.name "Jenkins"
+                    git config user.email "jenkins@example.com"
+                    git add .
+                    git commit -m "Build successful - Changes pushed by Jenkins"
+                    git push origin main
+                    '''
+                }
             }
         }
     }
