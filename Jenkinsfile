@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        git 'git'
+        git 'git' // Git configuré dans Jenkins
         maven 'Maven3' // Maven configuré dans Jenkins
     }
     environment {
@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Récupération du code depuis la branche ${BRANCH_NAME}"
-                bat "git clone --branch ${BRANCH_NAME} https://github.com/MatisVivier/Pipeline-Git-Jenkins.git"
+                git branch: "${BRANCH_NAME}", url: 'https://github.com/MatisVivier/Pipeline-Git-Jenkins.git'
             }
         }
         stage('Build') {
@@ -53,7 +53,7 @@ pipeline {
                         bat """
                             git config user.name "Jenkins"
                             git config user.email "jenkins@example.com"
-                            gitfetch origin
+                            git fetch origin
                             git checkout ${MAIN_BRANCH}
                             git merge ${BRANCH_NAME} --no-ff -m "Merge branch ${BRANCH_NAME} into ${MAIN_BRANCH}"
                             git push origin ${MAIN_BRANCH}
