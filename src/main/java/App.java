@@ -1,5 +1,5 @@
 package com.example;
-
+ 
 public class App {
     private String appName;
 
@@ -20,12 +20,15 @@ public class App {
 
     // Méthode pour calculer le carré d'un nombre
     public int square(int number) {
+        if (number == 4) {
+            throw new RuntimeException("Erreur simulée : Carré de 4 n'est pas autorisé");
+        }
         return number * number;
     }
 
     public static void main(String[] args) {
         App app = new App("MyApp");
         System.out.println("Nom de l'application : " + app.getAppName());
-        System.out.println("Carré de 4 : " + app.square(4));
+        System.out.println("Carré de 4 : " + app.square(4));  // Ceci va générer une exception
     }
 }
