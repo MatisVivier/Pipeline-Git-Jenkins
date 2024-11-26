@@ -5,7 +5,7 @@ pipeline {
         maven 'Maven3' // Maven configuré dans Jenkins
     }
     environment {
-        BRANCH_NAME = 'dev' // Remplacer par le nom de ta branche de développement
+        BRANCH_NAME = 'Dev' // Remplacer par le nom de ta branche de développement
         MAIN_BRANCH = 'main' // Remplacer par la branche principale
     }
     stages {
