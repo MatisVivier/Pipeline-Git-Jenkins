@@ -52,7 +52,7 @@ pipeline {
         }
         stage('Merge and Push to Main') {
             when {
-                branch 'dev'  // Cette étape se déclenche uniquement sur la branche dev
+                branch 'dev'  // Cette étape se déclenche uniquement sur la branche dev 
             }
             steps {
                 script {
