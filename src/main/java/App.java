@@ -13,7 +13,7 @@ public class App {
         this.appName = appName;
     }
 
-    // Méthode pour retourner le nom de l'application
+    // Méthode pour retourner le nom de l'applicffation
     public String getAppName() {
         return appName;
     }
