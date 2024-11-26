@@ -6,12 +6,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    // Ajouter la clé GitHub à known_hosts pour éviter l'erreur de vérification
-                    sh 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
-                }
                 echo "Récupération du code depuis le dépôt Git"
-                git branch: 'main', url: 'git@github.com:MatisVivier/Pipeline-Git-Jenkins.git'
+                git branch: 'main', url: 'https://github.com/MatisVivier/Pipeline-Git-Jenkins'
             }
         }
         stage('Build') {
@@ -36,23 +32,6 @@ pipeline {
             steps {
                 echo "Création de l'artefact"
                 bat 'mvn package'
-            }
-        }
-        stage('Push Changes') {
-            steps {
-                script {
-                    // Utiliser ssh-agent pour gérer la clé SSH
-                    sshagent(['git-ssh-key']) {
-                        echo "Pousser les changements vers Git"
-                        bat '''
-                            git config user.name "MatisVivier"
-                            git config user.email "matisvivier2004@gmail.com"
-                            git add .
-                            git diff-index --quiet HEAD || git commit -m "Build successful - Changes pushed by Jenkins"
-                            git push origin main
-                        '''
-                    }
-                }
             }
         }
     }
