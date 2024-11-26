@@ -50,8 +50,8 @@ pipeline {
 
                         // Configuration de Git avec le chemin absolu
                         bat """
-                            "C:\\Program Files\\Git\\bin\\git.exe" config user.name "Jenkins"
-                            "C:\\Program Files\\Git\\bin\\git.exe" config user.email "jenkins@example.com"
+                            "C:\\Program Files\\Git\\bin\\git.exe" config user.name "MatisVivier"
+                            "C:\\Program Files\\Git\\bin\\git.exe" config user.email "matisvivier2004@gmail.com"
                             "C:\\Program Files\\Git\\bin\\git.exe" fetch origin
                             "C:\\Program Files\\Git\\bin\\git.exe" checkout ${MAIN_BRANCH}
                             "C:\\Program Files\\Git\\bin\\git.exe" merge ${BRANCH_NAME} --no-ff -m "Merge branch ${BRANCH_NAME} into ${MAIN_BRANCH}"
