@@ -6,6 +6,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                script {
+                    // Ajouter la clé GitHub à known_hosts pour éviter l'erreur de vérification
+                    sh 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
+                }
                 echo "Récupération du code depuis le dépôt Git"
                 git branch: 'main', url: 'git@github.com:MatisVivier/Pipeline-Git-Jenkins.git'
             }
