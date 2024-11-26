@@ -4,7 +4,7 @@ pipeline {
         maven 'Maven3' // Maven configuré dans Jenkins
     }
     environment {
-        BRANCH_NAME = 'feature/xyz' // Remplacer par le nom de ta branche de développement
+        BRANCH_NAME = 'dev' // Remplacer par le nom de ta branche de développement
     }
     stages {
         stage('Checkout') {
@@ -39,7 +39,7 @@ pipeline {
         }
         stage('Push to Main') {
             when {
-                branch 'feature/xyz'  // Cette étape se déclenche uniquement sur la branche feature/xyz
+                branch 'feature/xyz'  // Cette étape se déclenche uniquement sur la branche dev
             }
             steps {
                 script {
