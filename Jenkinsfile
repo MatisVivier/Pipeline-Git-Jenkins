@@ -38,9 +38,17 @@ pipeline {
     post {
         success {
             echo "Pipeline exécuté avec succès !"
+            echo "Poussée des changements vers le dépôt Git"
+            bat '''
+                git config user.name "Jenkins"
+                git config user.email "jenkins@example.com"
+                git add .
+                git commit -m "Build successful - Changes pushed by Jenkins"
+                git push origin main
+            '''
         }
         failure {
-            echo "Échec du pipeline. Vérifiez les logs Jenkins."
+            echo "Échec du pipeline. Aucune poussée n'a été effectuée."
         }
         always {
             echo "Nettoyage du workspace"
