@@ -21,11 +21,31 @@ pipeline {
                 echo "Exécution des tests unitaires"
                 bat 'mvn test'
             }
+            post {
+                success {
+                    echo "Les tests ont réussi !"
+                }
+                failure {
+                    echo "Les tests ont échoué. Le pipeline ne poussera pas les changements."
+                    currentBuild.result = 'FAILURE'
+                    error('Tests échoués')
+                }
+            }
         }
         stage('Static Analysis') {
             steps {
                 echo "Analyse du code avec Checkstyle"
                 bat 'mvn checkstyle:check'
+            }
+            post {
+                success {
+                    echo "Aucune violation de code détectée."
+                }
+                failure {
+                    echo "Des violations de code ont été détectées. Corrigez les erreurs avant de pousser."
+                    currentBuild.result = 'FAILURE'
+                    error('Violations détectées')
+                }
             }
         }
         stage('Package') {
