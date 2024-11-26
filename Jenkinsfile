@@ -4,7 +4,8 @@ pipeline {
         maven 'Maven3' // Maven configuré dans Jenkins
     }
     environment {
-        BRANCH_NAME = 'feature/xyz' // Remplacer par le nom de ta branche de développement
+        BRANCH_NAME = 'Dev' // Remplacer par le nom de ta branche de développement
+        MAIN_BRANCH = 'main' // Remplacer par la branche principale
     }
     stages {
         stage('Checkout') {
@@ -37,24 +38,27 @@ pipeline {
                 bat 'mvn package'
             }
         }
-        stage('Push to Main') {
+        stage('Merge and Push to Main') {
             when {
-                branch 'dev'  // Cette étape se déclenche uniquement sur la branche feature/xyz
+                branch 'dev'  // Cette étape se déclenche uniquement sur la branche dev
             }
             steps {
                 script {
-                    // Si la pipeline passe avec succès, push vers main
-                    if (currentBuild.result == 'SUCCESS') {
-                        echo "Pipeline réussie, pushing vers main..."
-                        sh '''
-                            git config user.name "Jenkins"
-                            git config user.email "jenkins@example.com"
-                            git checkout main
-                            git merge feature/xyz --no-ff -m "Merging changes from dev"
-                            git push origin main
-                        '''
+                    // Vérifie si la build est réussie
+                    if (currentBuild.currentResult == 'SUCCESS') {
+                        echo "Pipeline réussie, merging vers main..."
+
+                        // Configuration de Git avec le chemin absolu
+                        bat """
+                            "C:\\Program Files\\Git\\bin\\git.exe" config user.name "MatisVivier"
+                            "C:\\Program Files\\Git\\bin\\git.exe" config user.email "matisvivier2004@gmail.com"
+                            "C:\\Program Files\\Git\\bin\\git.exe" fetch origin
+                            "C:\\Program Files\\Git\\bin\\git.exe" checkout ${MAIN_BRANCH}
+                            "C:\\Program Files\\Git\\bin\\git.exe" merge ${BRANCH_NAME} --no-ff -m "Merge branch ${BRANCH_NAME} into ${MAIN_BRANCH}"
+                            "C:\\Program Files\\Git\\bin\\git.exe" push origin ${MAIN_BRANCH}
+                        """
                     } else {
-                        echo "Pipeline échouée, pas de push vers main."
+                        echo "Pipeline échouée, pas de merge vers main."
                     }
                 }
             }
