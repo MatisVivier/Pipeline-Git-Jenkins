@@ -26,6 +26,6 @@ public class App {
     public static void main(String[] args) {
         App app = new App("MyApp");
         System.out.println("Nom de l'application : " + app.getAppName());
-        System.out.println("Carré de 4 : " + app.square(4));
+        System.out.println("Carré de 5 : " + app.square(5));
     }
 }
